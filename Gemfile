@@ -1,8 +1,9 @@
 source 'http://rubygems.org'
+source 'http://gemcutter.org/'
 
 gem 'rails', '3.0.0.beta4'
 gem 'mysql'
-gem "fluxx_engine", :path => "../fluxx_engine"
+gem "fluxx_engine", '>= 0.0.2', :path => "../fluxx_engine"
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
