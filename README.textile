@@ -21,6 +21,4 @@ fluxx_engine gem
 database
 * cp config/database.yml.sample config/database.yml
 ** Edit config/database.yml and adjust the parameters for your local db 
-* rake db:create
-* rake db:migrate
-
+* rake db:setup
