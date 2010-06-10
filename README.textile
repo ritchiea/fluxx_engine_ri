@@ -1,0 +1,26 @@
+Getting started with fluxx engine:
+
+Get bundler running so you can manage your dependencies via the Gemfile 
+* gem update --system
+* gem install bundler
+* 
+
+* Be sure you are using rails 3
+** Change your dependencies in the Gemfile
+** If you are not using the bundler, you must install the latest rails: gem install rails --pre
+
+
+fluxx_engine gem
+* In order for the gem to be readable, you must place it in a directory ../fluxx_engine in relation to your directory.  Otherwise, amend the reference implementations Gemfile to reference its location.
+* gem install jeweler to make sure you have jeweler available
+* cd ../fluxx_engine; rake install
+** Now you should see a fluxx_engine.gemspec file living in your fluxx_engine directory
+* generate the migration.  Note that this can be run multiple times without overwriting or generating extra migrations.  In the future to get upgrades, simply run it again
+** rails generate fluxx_engine_migration
+
+database
+* cp config/database.yml.sample config/database.yml
+** Edit config/database.yml and adjust the parameters for your local db 
+* rake db:create
+* rake db:migrate
+
