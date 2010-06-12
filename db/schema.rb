@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100609173843) do
+ActiveRecord::Schema.define(:version => 20100611234324) do
 
   create_table "realtime_updates", :force => true do |t|
     t.datetime "created_at"
@@ -19,6 +19,12 @@ ActiveRecord::Schema.define(:version => 20100609173843) do
     t.integer  "model_id",    :null => false
     t.string   "model_class", :null => false
     t.text     "attributes",  :null => false
+  end
+
+  create_table "wines", :force => true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "name",       :null => false
   end
 
 end
