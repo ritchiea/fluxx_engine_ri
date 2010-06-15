@@ -1,10 +1,10 @@
 class WinesController < ApplicationController
-  VIEW_ATTRS = 
-  [
-    { :class => 'fluxx-card-listing-entry-line1', :type => 'span',
-      :fields => [:name]
-    },
-  ]
+  insta_index Wine, :template => 'wine_list'
+  insta_show Wine, :template => 'wine_show'
+  insta_new Wine, :template => 'wine_form'
+  insta_edit Wine, :template => 'wine_form'
+  insta_post Wine, :template => 'wine_form'
+  insta_put Wine, :template => 'wine_form'
+  insta_delete Wine
   
-  insta_index Wine, :view_attrs => VIEW_ATTRS
 end
