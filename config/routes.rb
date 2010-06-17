@@ -1,4 +1,6 @@
 FluxxEngineRi::Application.routes.draw do |map|
+  resources :grape_varieties
+
   resources :wines
 
   # The priority is based upon order of creation:

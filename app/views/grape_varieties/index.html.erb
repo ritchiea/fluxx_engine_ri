@@ -1,0 +1,21 @@
+<h1>Listing grape_varieties</h1>
+
+<table>
+  <tr>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @grape_varieties.each do |grape_variety| %>
+  <tr>
+    <td><%= link_to 'Show', grape_variety %></td>
+    <td><%= link_to 'Edit', edit_grape_variety_path(grape_variety) %></td>
+    <td><%= link_to 'Destroy', grape_variety, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Grape variety', new_grape_variety_path %>
