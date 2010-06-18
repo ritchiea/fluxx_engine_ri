@@ -9,7 +9,7 @@
           dashboard: {
             default: {
               name: 'Default',
-              type: 'dashboard',
+              'type': 'dashboard',
               data: {
                 cards: [
                   {
@@ -20,10 +20,10 @@
               }
             },
             store: {
-              type: 'server',
+              'type': 'server',
               config: {
                 index: '/resource/index?type=dashboard',
-                get: '/resource/show?type=dashboard', // Assume id=$id always appended
+                get: '/resource/show?type=dashboard',  // Assume id=$id always appended
                 get: '/resource/update?type=dashboard' // Assume id=$id always appended
               }
             }
