@@ -1,0 +1,28 @@
+%html
+  %head
+    %title "Wine Dashboard"
+    =javascript_include_tag '/fluxx_engine/dist/fluxx.engine.full.js'
+    =stylesheet_link_tag '/fluxx_engine/theme/_common/css/style.css'
+    :javascript
+      $.extend(true, {
+        fluxx: {
+          config: {
+            cards: [
+              {
+                title: 'Hello',
+                listing: {
+                  url: '/wines'
+                },
+                detail: {
+                  url: '/wines/1'
+                }
+              }
+            ]
+          }
+        }
+      });
+      jQuery(function($){
+        $('body').fluxxStage();
+      });
+  %body#fluxx
+    Loading Dashboard

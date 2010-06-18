@@ -1,4 +1,7 @@
 FluxxEngineRi::Application.routes.draw do |map|
+  get "dashboard/index"
+  root :to => 'dashboard#index'
+
   resources :grape_varieties
 
   resources :wines
