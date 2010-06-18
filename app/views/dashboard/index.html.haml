@@ -6,6 +6,28 @@
     :javascript
       $.extend(true, {
         fluxx: {
+          dashboard: {
+            default: {
+              name: 'Default',
+              type: 'dashboard',
+              data: {
+                cards: [
+                  {
+                    title: 'First',
+                    listing: {url: '/foo'}
+                  }
+                ]
+              }
+            },
+            store: {
+              type: 'server',
+              config: {
+                index: '/resource/index?type=dashboard',
+                get: '/resource/show?type=dashboard', // Assume id=$id always appended
+                get: '/resource/update?type=dashboard' // Assume id=$id always appended
+              }
+            }
+          }
           config: {
             cards: [
               {
