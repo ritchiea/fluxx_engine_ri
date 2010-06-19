@@ -17,8 +17,15 @@ fluxx_engine gem
 ** Now you should see a fluxx_engine.gemspec file living in your fluxx_engine directory
 * generate the migration.  Note that this can be run multiple times without overwriting or generating extra migrations.  In the future to get upgrades, simply run it again
 ** rails generate fluxx_engine_migration
+* generate the javascript and copy it to your application's public directory
+** rails generate fluxx_engine_public
 
 database
 * cp config/database.yml.sample config/database.yml
 ** Edit config/database.yml and adjust the parameters for your local db 
 * rake db:setup
+
+Get dependencies
+* bundle install
+
+
