@@ -20,8 +20,6 @@ class GrapeVarietiesControllerTest < ActionController::TestCase
     assert_difference('GrapeVariety.count') do
       post :create, :grape_variety => @grape_variety.attributes
     end
-
-    assert_redirected_to grape_variety_path(assigns(:grape_variety))
   end
 
   test "should show grape_variety" do
@@ -36,14 +34,11 @@ class GrapeVarietiesControllerTest < ActionController::TestCase
 
   test "should update grape_variety" do
     put :update, :id => @grape_variety.to_param, :grape_variety => @grape_variety.attributes
-    assert_redirected_to grape_variety_path(assigns(:grape_variety))
   end
 
   test "should destroy grape_variety" do
     assert_difference('GrapeVariety.count', -1) do
       delete :destroy, :id => @grape_variety.to_param
     end
-
-    assert_redirected_to grape_varieties_path
   end
 end
