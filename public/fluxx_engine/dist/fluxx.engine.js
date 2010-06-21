@@ -3,14 +3,20 @@
     addFluxxCard: function(options, onComplete) {
       var options = $.fluxx.util.options_with_callback($.fluxx.card.defaults,options,onComplete);
       return this.each(function(){
-        var $card = $.fluxx.card.ui.call($.my.hand, options);
+        var $card = $.fluxx.card.ui.call($.my.hand, options).hide()
+          .appendTo($.my.hand);
         $card
-          .appendTo($.my.hand)
-          .bind('fluxx.card.complete', options.callback)
-          .bind('fluxx.card.load', options.onload)
           .data({
-            listing: $('.listing:eq(0)', $card),
-            detail: $('.detail:eq(0)', $card)
+            listing: $('.listing:eq(0)',  $card),
+            detail:  $('.detail:eq(0)',   $card),
+            box:     $('.card-box:eq(0)', $card)
+          })
+          .bind({
+            'fluxx.card.complete': _.callAll(
+              function(){$card.show().resizeFluxxCard()},
+              options.callback
+            ),
+            'fluxx.card.load': options.onload
           });
         $card.triggerHandler('fluxx.card.load')
         $card.fluxxCardLoadListing({url: options.listing.url}, function(){
@@ -18,12 +24,53 @@
             $card.triggerHandler('fluxx.card.complete');
           })
         });
+        $.my.cards = $('.card');
       });
     },
+    removeFluxxCard: function(options, onComplete) {
+      var options = $.fluxx.util.options_with_callback({},options,onComplete);
+      return this.each(function(){
+        $(this)
+          .bind('fluxx.card.unload', options.callback)
+          .bind('fluxx.card.unload', function(e){$(e.target).remove(); $.my.cards = $('.card')})
+          .triggerHandler('fluxx.card.unload');
+      });
+    },
+    resizeFluxxCard: function(options, onComplete) {
+      var options = $.fluxx.util.options_with_callback({},options,onComplete);
+
+      $('.card-box', this)
+        .height(
+          $.my.cards.height(
+            $.my.hand.innerHeight() -
+            $.fluxx.util.marginHeight($.my.cards)
+          ).innerHeight()
+        )
+        .each(function(){
+          var $box      = $(this),
+              $cardBody = $('.card-body', $box);
+          $('.area', $cardBody).height(
+            $cardBody.height(
+              $cardBody.parent().innerHeight() -
+              _.addUp($cardBody.siblings(), 'outerHeight', true)
+            ).innerHeight()
+          ).each(function(){
+            var $area     = $(this),
+                $areaBody = $('.body', $area);
+            $areaBody.height(
+              $areaBody.parent().innerHeight() -
+              _.addUp($areaBody.siblings(), 'outerHeight', true)
+            )
+          });
+        });
+
+      return this;
+    },
     
+    /* Accessors */
     fluxxCard: function() {
       return this.data('card')
-       || this.data('card', this.parents('.card:eq(0)').andSelf()).data('card');
+        || this.data('card', this.parents('.card:eq(0)').andSelf()).data('card');
     },
     fluxxCardListing: function() {
       return this.fluxxCard().data('listing');
@@ -31,7 +78,11 @@
     fluxxCardDetail: function () {
       return this.fluxxCard().data('detail');
     },
+    fluxxCardBox: function () {
+      return this.fluxxCard().data('box');
+    },
     
+    /* Data Loaders */
     fluxxCardLoadContent: function (options, onComplete) {
       var defaults = {
         area: undefined,
@@ -40,8 +91,12 @@
         data: {}
       };
       var options = $.fluxx.util.options_with_callback(defaults,options,onComplete);
-      if (!options.url) return this;
-      options.area.one('fluxx.area.complete', options.callback);
+      options.area.unbind('fluxx.area.complete').bind('fluxx.area.complete', options.callback);
+
+      if (!options.url) {
+        options.area.triggerHandler('fluxx.area.complete');
+        return this;
+      }
       
       $.ajax({
         url: options.url,
@@ -49,13 +104,16 @@
         data: options.data,
         success: function (data, status, xhr) {
           var $document = $('<div/>').html(data);
-          $('.header', options.area).html($('#card-header', $document).html());
-          $('.body',   options.area).html($('#card-body',   $document).html());
-          $('.footer', options.area).html($('#card-footer', $document).html());
+          $('.header', options.area).html($('#card-header', $document).html() || '&nbsp;');
+          $('.body',   options.area).html($('#card-body',   $document).html() || '&nbsp;');
+          $('.footer', options.area).html($('#card-footer', $document).html() || '&nbsp;');
+          options.area.triggerHandler('fluxx.area.complete');
+        },
+        error: function(xhr, status, error) {
+          options.area.triggerHandler('fluxx.area.complete');
         }
       });
       
-      options.area.triggerHandler('fluxx.area.complete');
       return this;
     },
     
@@ -122,8 +180,10 @@
     ];
   };
   $.fluxx.card.ui.area = function(options) {
+    var types = ['area'];
+    types.unshift(options.type);
     return [
-      '<div class="', options.type, '">',
+      '<div class="', types.join(' '), '">',
         '<div class="header"></div>',
         '<div class="body"></div>',
         '<div class="footer"></div>',
@@ -131,10 +191,32 @@
     ];
   };
 
+  $(window).resize(function(e){
+    $.my.cards.resizeFluxxCard();
+  });
 })(jQuery);
 (function($){
+  _.mixin({
+    addUp: function (set, property) {
+      var args = _.toArray(arguments).slice(2);
+      return _.reduce($(set).get(), 0, function(m,i){
+        return m + $(i)[property].call($(i), args);
+      });
+    },
+    callAll: function () {
+      var functions = _.toArray(arguments);
+      return function() {
+        var this_ = this;
+        var args  = arguments;
+        _.each(functions, function(f){f.call(this_, args)});
+      }
+    }
+  });
+  
   $.extend(true, {
-    my: {}, /* Selector Cache */
+    my: {
+      cards: $()
+    },
     fluxx: {
       config: {
         cards: []
@@ -153,6 +235,9 @@
           if ($.isArray(value))    return _.map(value,function(x){return $.fluxx.util.resultOf(x)}).join('');
           if ($.isFunction(value)) return arguments.callee(value.apply(value, _.tail(arguments)));
           return value;
+        },
+        marginHeight: function($selector) {
+          return parseInt($selector.css('marginTop')) + parseInt($selector.css('marginBottom'));
         }
       },
       logOn: true,
@@ -172,12 +257,15 @@ jQuery(function($){
     fluxxStage: function(options, onComplete) {
       var options = $.fluxx.util.options_with_callback({}, options, onComplete);
       return this.each(function(){
-        $.my.fluxx  = $(this);
+        $.my.fluxx  = $(this).attr('id', 'fluxx');
         $.my.stage  = $.fluxx.stage.ui.call(this, options).appendTo($.my.fluxx.empty());
         $.my.hand   = $('#hand');
-        $.my.stage
-          .bind('fluxx.stage.complete', options.callback)
-          .bind('fluxx.stage.complete', function(){ $.my.hand.addFluxxCards({cards: $.fluxx.config.cards});});
+        $.my.stage.bind({
+          'fluxx.stage.complete': _.callAll(
+            function(){ $.my.hand.addFluxxCards({cards: $.fluxx.config.cards});},
+            options.callback
+          )
+        });
         $.my.stage.triggerHandler('fluxx.stage.complete');
       });
     },
@@ -186,11 +274,22 @@ jQuery(function($){
       return this.each(function(){
         if (!$.my.stage) return;
         $(this).remove();
-        $.my.stage.trigger('fluxx.stage.unload');
+        $.my.stage.triggerHandler('fluxx.stage.unload');
         $.my.stage = undefined;
         $.my.hand  = undefined;
+        $.my.cards = $();
         options.callback.call(this);
       });
+    },
+    resizeFluxxStage: function(options, onComplete) {
+      if (!this.length) return this;
+      var options = $.fluxx.util.options_with_callback({}, options, onComplete);
+      var allCards = _.addUp($.my.cards, 'outerWidth', true);
+      $.my.stage
+        .width(allCards)
+        .bind('fluxx.stage.resize', options.callback)
+        .triggerHandler('fluxx.stage.resize');
+      return this;
     },
     
     addFluxxCards: function(options) {
@@ -235,4 +334,8 @@ jQuery(function($){
   $.fluxx.stage.ui.footer = [
     '<div id="footer">Footer</div>'
   ].join('');
+  
+  $(window).resize(function(e){
+    $.my.stage.resizeFluxxStage();
+  });
 })(jQuery);
