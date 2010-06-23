@@ -1194,16 +1194,16 @@ b.dequeue()})})}})(jQuery);
             box:     $('.card-box:eq(0)', $card)
           })
           .bind({
-            'fluxx.card.complete': _.callAll(
-              function(){$card.show().resizeFluxxCard()},
+            'fluxxCard.complete': _.callAll(
+              function(){$card.show().resizeFluxxCard(); $.my.stage.resizeFluxxStage()},
               options.callback
             ),
-            'fluxx.card.load': options.onload
+            'fluxxCard.load': options.onload
           });
-        $card.triggerHandler('fluxx.card.load')
+        $card.trigger('fluxxCard.load')
         $card.fluxxCardLoadListing({url: options.listing.url}, function(){
           $card.fluxxCardLoadDetail({url: options.detail.url}, function(){
-            $card.triggerHandler('fluxx.card.complete');
+            $card.trigger('fluxxCard.complete');
           })
         });
         $.my.cards = $('.card');
@@ -1213,9 +1213,9 @@ b.dequeue()})})}})(jQuery);
       var options = $.fluxx.util.options_with_callback({},options,onComplete);
       return this.each(function(){
         $(this)
-          .bind('fluxx.card.unload', options.callback)
-          .bind('fluxx.card.unload', function(e){$(e.target).remove(); $.my.cards = $('.card')})
-          .triggerHandler('fluxx.card.unload');
+          .bind('fluxxCard.unload', options.callback)
+          .bind('fluxxCard.unload', function(e){$(e.target).remove(); $.my.cards = $('.card')})
+          .trigger('fluxxCard.unload');
       });
     },
     resizeFluxxCard: function(options, onComplete) {
@@ -1254,6 +1254,13 @@ b.dequeue()})})}})(jQuery);
       return this.data('card')
         || this.data('card', this.parents('.card:eq(0)').andSelf()).data('card');
     },
+    fluxxCardArea: function() {
+      return this.data('area')
+        || this.data('area', this.parents('.area:eq(0)').andSelf()).data('area');
+    },
+    fluxxCardAreaURL: function() {
+      return this.fluxxCardArea().data('history')[0].url;
+    },
     fluxxCardListing: function() {
       return this.fluxxCard().data('listing');
     },
@@ -1273,13 +1280,18 @@ b.dequeue()})})}})(jQuery);
         data: {}
       };
       var options = $.fluxx.util.options_with_callback(defaults,options,onComplete);
-      options.area.unbind('fluxx.area.complete').bind('fluxx.area.complete', options.callback);
+      options.area.unbind('fluxxArea.complete').bind('fluxxArea.complete', options.callback);
 
       if (!options.url) {
-        options.area.triggerHandler('fluxx.area.complete');
+        options.area.trigger('fluxxArea.complete');
         return this;
       }
-      
+      if (!options.area.data('history')) {
+        options.area.data('history', [options]);
+      } else {
+        options.area.data('history').unshift(options);
+      }
+
       $.ajax({
         url: options.url,
         type: options.type,
@@ -1289,10 +1301,10 @@ b.dequeue()})})}})(jQuery);
           $('.header', options.area).html($('#card-header', $document).html() || '&nbsp;');
           $('.body',   options.area).html($('#card-body',   $document).html() || '&nbsp;');
           $('.footer', options.area).html($('#card-footer', $document).html() || '&nbsp;');
-          options.area.triggerHandler('fluxx.area.complete');
+          options.area.trigger('fluxxArea.complete');
         },
         error: function(xhr, status, error) {
-          options.area.triggerHandler('fluxx.area.complete');
+          options.area.trigger('fluxxArea.complete');
         }
       });
       
@@ -1401,7 +1413,7 @@ b.dequeue()})})}})(jQuery);
     },
     fluxx: {
       config: {
-        cards: []
+        cards: $('.card')
       },
       util: {
         options_with_callback: function(defaults, options, callback) {
@@ -1420,6 +1432,14 @@ b.dequeue()})})}})(jQuery);
         },
         marginHeight: function($selector) {
           return parseInt($selector.css('marginTop')) + parseInt($selector.css('marginBottom'));
+        },
+        itEndsWithMe: function(e) {
+          e.stopPropagation();
+          e.preventDefault();
+        },
+        itEndsHere: function (e) {
+          e.stopImmediatePropagation();
+          e.preventDefault();
         }
       },
       logOn: true,
@@ -1443,12 +1463,14 @@ jQuery(function($){
         $.my.stage  = $.fluxx.stage.ui.call(this, options).appendTo($.my.fluxx.empty());
         $.my.hand   = $('#hand');
         $.my.stage.bind({
-          'fluxx.stage.complete': _.callAll(
+          'fluxxStage.complete': _.callAll(
+            function(){ $.my.stage.installFluxxDecorators(); },
             function(){ $.my.hand.addFluxxCards({cards: $.fluxx.config.cards});},
             options.callback
           )
         });
-        $.my.stage.triggerHandler('fluxx.stage.complete');
+        $('.card').live('fluxxCard.complete', function(){$.fluxx.log('live fluxxCard.complete')});
+        $.my.stage.trigger('fluxxStage.complete');
       });
     },
     removeFluxxStage: function(onComplete) {
@@ -1456,10 +1478,10 @@ jQuery(function($){
       return this.each(function(){
         if (!$.my.stage) return;
         $(this).remove();
-        $.my.stage.triggerHandler('fluxx.stage.unload');
+        $.my.stage.trigger('fluxxStage.unload');
         $.my.stage = undefined;
         $.my.hand  = undefined;
-        $.my.cards = $();
+        $.my.cards = $('.card');
         options.callback.call(this);
       });
     },
@@ -1469,8 +1491,8 @@ jQuery(function($){
       var allCards = _.addUp($.my.cards, 'outerWidth', true);
       $.my.stage
         .width(allCards)
-        .bind('fluxx.stage.resize', options.callback)
-        .triggerHandler('fluxx.stage.resize');
+        .bind('fluxxStage.resize', options.callback)
+        .trigger('fluxxStage.resize');
       return this;
     },
     
@@ -1479,6 +1501,12 @@ jQuery(function($){
       if (!options.cards.length) return this;
       $.each(options.cards, function() { $.my.hand.addFluxxCard(this) });
       return this;
+    },
+    
+    installFluxxDecorators: function() {
+      _.each($.fluxx.stage.decorators, function(val,key) {
+        $(key).live(val[0], val[1]);
+      });
     }
   });
   
@@ -1496,6 +1524,46 @@ jQuery(function($){
               $.fluxx.stage.ui.cardTable,
               $.fluxx.stage.ui.footer
             ]));
+        },
+        decorators: {
+          'a.to-self':   [
+            'click', function (e) {
+              $.fluxx.util.itEndsWithMe(e);
+              var $elem = $(this);
+              $elem.fluxxCardLoadContent({
+                url: $elem.attr('href'),
+                area: $elem.fluxxCardArea()
+              });
+            }
+          ],
+          'a.to-detail': ['click', function (e) {
+            $.fluxx.util.itEndsWithMe(e);
+              var $elem = $(this);
+              $elem.fluxxCardLoadDetail({
+                url: $elem.attr('href')
+              });
+            }
+          ],
+          'a.area-url': [
+            'click', function(e) {
+              var $elem = $(this);
+              $elem.attr('href', $elem.fluxxCardAreaURL());
+            }
+          ],
+          'form.to-self': [
+            'submit', function (e) {
+              $.fluxx.util.itEndsWithMe(e);
+              var $elem = $(this);
+              var properties = {
+                area: $elem.fluxxCardArea(),
+                url: $elem.attr('action'),
+                data: $elem.serializeArray()
+              };
+              if ($elem.attr('method'))
+                properties.type = $elem.attr('method');
+              $elem.fluxxCardLoadContent(properties)
+            }
+          ]
         }
       }
     }
@@ -1520,4 +1588,5 @@ jQuery(function($){
   $(window).resize(function(e){
     $.my.stage.resizeFluxxStage();
   });
+
 })(jQuery);
