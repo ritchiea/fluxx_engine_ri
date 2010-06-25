@@ -1,2 +1,4 @@
 = form.input :name, :label => "Wine Name"
+= form.input :grape_variety, :label => "Grape Variety", :as => :autocomplete, :autocomplete_url => auto_complete_grape_varieties_path
+
 = form.commit_button

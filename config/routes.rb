@@ -2,9 +2,17 @@ FluxxEngineRi::Application.routes.draw do |map|
   get "dashboard/index"
   root :to => 'dashboard#index'
 
-  resources :grape_varieties
+  resources :grape_varieties do
+    collection do
+      get  :auto_complete
+    end
+  end
 
-  resources :wines
+  resources :wines do
+    collection do
+      get  :auto_complete
+    end
+  end
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

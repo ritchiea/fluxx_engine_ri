@@ -31,7 +31,10 @@ ActiveRecord::Schema.define(:version => 20100615211710) do
   create_table "wines", :force => true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "name",       :null => false
+    t.string   "name",             :null => false
+    t.integer  "grape_variety_id"
+    t.datetime "locked_until"
+    t.integer  "locked_by_id"
   end
 
 end

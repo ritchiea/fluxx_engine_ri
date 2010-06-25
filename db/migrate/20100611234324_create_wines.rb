@@ -3,6 +3,7 @@ class CreateWines < ActiveRecord::Migration
     create_table :wines do |t|
       t.timestamps
       t.string :name,      :null => false
+      t.integer :grape_variety_id, :null => true
       t.datetime :locked_until, :null => true
       t.integer :locked_by_id, :null => true
     end
