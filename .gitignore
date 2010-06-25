@@ -9,3 +9,4 @@ tmp/*
 public/stylesheets/compiled/*.css
 tmp/sass-cache
 db/migrate/20100610171211_create_fluxx_engine_realtime_updates_table.rb
+.bundle

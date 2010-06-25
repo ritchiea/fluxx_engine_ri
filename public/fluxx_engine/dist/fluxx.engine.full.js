@@ -1598,6 +1598,41 @@ jQuery(function($){
               if ($elem.attr('method'))
                 properties.type = $elem.attr('method');
               $elem.fluxxCardLoadContent(properties)
+            },
+          ],
+          'input[data-autocomplete]': [
+            'focus', function (e) {
+              $.fluxx.util.itEndsWithMe(e);
+              var $elem = $(this);
+              if ($elem.data('autocomplete_initialized')) return;
+              $elem.data('autocomplete_initialized', 1);
+
+              var endPoint = $elem.attr('data-autocomplete');
+              
+              $elem.autocomplete({
+                source: function (query, response) {
+                  $.getJSON(
+                    endPoint,
+                    query,
+                    function(data, status){
+                      response(data);
+                    }
+                  );
+                },
+                focus: function (e, ui) {
+                  $elem.val(ui.item.label);
+                  return false;
+                },
+                select: function (e, ui) {
+                  $elem.val(ui.item.label);
+                  $elem
+                    .parent()
+                    .find('input[data-sibling='+ $elem.attr('data-sibling') +']')
+                    .not($elem)
+                    .val(ui.item.value);
+                  return false;
+                }
+              });
             }
           ]
         }
