@@ -274,12 +274,49 @@ jQuery(function($){
   $.my.body = $('body');
 });(function($){
   $.fn.extend({
+    addFluxxDock: function(options, onComplete) {
+      var options = $.fluxx.util.options_with_callback($.fluxx.dock.defaults,options,onComplete);
+      return this.each(function(){
+        var $dock = $.fluxx.dock.ui.call($.my.hand, options).hide()
+          .appendTo($.my.hand);
+      });
+    }
+  });
+  $.extend(true, {
+    fluxx: {
+      dock: {
+        defaults: {
+        },
+        attrs: {
+          'class': 'dock'
+        },
+        ui: function(options) {
+          return $('<div>')
+            .attr($.fluxx.card.attrs)
+            .html($.fluxx.util.resultOf([
+              'Hello'
+            ]));
+        }
+      }
+    }
+  });
+  
+  $(function($){
+    $('.card').live('fluxxCard.load', function(){
+      var $card = $(this);
+      $.fluxx.log($card.attr('id'), 'card loaded');
+    });
+  });
+})(jQuery);(function($){
+  $.fn.extend({
     fluxxStage: function(options, onComplete) {
       var options = $.fluxx.util.options_with_callback({}, options, onComplete);
       return this.each(function(){
         $.my.fluxx  = $(this).attr('id', 'fluxx');
         $.my.stage  = $.fluxx.stage.ui.call(this, options).appendTo($.my.fluxx.empty());
         $.my.hand   = $('#hand');
+        $.my.header = $('#header');
+        $.my.footer = $('#footer');
         $.my.stage.bind({
           'fluxxStage.complete': _.callAll(
             function(){ $.my.stage.installFluxxDecorators(); },
@@ -287,7 +324,6 @@ jQuery(function($){
             options.callback
           )
         });
-        $('.card').live('fluxxCard.complete', function(){$.fluxx.log('live fluxxCard.complete')});
         $.my.stage.trigger('fluxxStage.complete');
       });
     },
