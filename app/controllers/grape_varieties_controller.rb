@@ -1,7 +1,4 @@
 class GrapeVarietiesController < ApplicationController
-  insta_auto_complete GrapeVariety do |insta|
-    insta.template = 'grape_variety_list'
-  end
   insta_index GrapeVariety do |insta|
     insta.template = 'grape_variety_list'
   end
