@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100615211710) do
+ActiveRecord::Schema.define(:version => 20100629142857) do
 
   create_table "grape_varieties", :force => true do |t|
     t.datetime "created_at"
@@ -21,11 +21,12 @@ ActiveRecord::Schema.define(:version => 20100615211710) do
   create_table "realtime_updates", :force => true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "action",      :null => false
+    t.string   "action",           :null => false
     t.integer  "user_id"
-    t.integer  "model_id",    :null => false
-    t.string   "model_class", :null => false
-    t.text     "attributes",  :null => false
+    t.integer  "model_id",         :null => false
+    t.string   "type_name",        :null => false
+    t.string   "model_class",      :null => false
+    t.text     "delta_attributes", :null => false
   end
 
   create_table "wines", :force => true do |t|
