@@ -619,3 +619,4 @@ GrapeVariety.create([{:wine_type => 'red', :name => "Abouriou"},
     {:wine_type => 'white', :name => "Zierfandler"},
     {:wine_type => 'white', :name => "Zilvaka"},
     {:wine_type => 'white', :name => "Žlahtina"}])
+Wine.create([{:name => 'Chablis 2009', :grape_variety => GrapeVariety.find_by_name('Viura')}])

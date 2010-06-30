@@ -20,6 +20,7 @@ class WinesController < ApplicationController
   insta_delete Wine do |insta|
     insta.template = 'wine_form'
   end
+
   insta_related Wine do |insta|
     insta.add_related do |related|
       related.display_name = 'Grapes'
@@ -29,7 +30,6 @@ class WinesController < ApplicationController
       related.max_results = 20
       related.order = 'name asc'
       #related.display_template = 'template'
-      related.display_fields = [:name]
     end
   end  
 end
