@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100629142857) do
+ActiveRecord::Schema.define(:version => 20100630002546) do
 
   create_table "grape_varieties", :force => true do |t|
     t.datetime "created_at"
@@ -17,6 +17,34 @@ ActiveRecord::Schema.define(:version => 20100629142857) do
     t.string   "name"
     t.string   "wine_type"
   end
+
+  create_table "multi_element_choices", :force => true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "target_id",              :null => false
+    t.integer  "multi_element_value_id", :null => false
+  end
+
+  add_index "multi_element_choices", ["multi_element_value_id"], :name => "multi_element_choice_value_id"
+  add_index "multi_element_choices", ["target_id", "multi_element_value_id"], :name => "multi_element_choices_index_cl_attr_val", :unique => true
+
+  create_table "multi_element_groups", :force => true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "target_class_name", :null => false
+    t.string   "name"
+    t.string   "description"
+  end
+
+  create_table "multi_element_values", :force => true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "description"
+    t.string   "value"
+    t.integer  "multi_element_group_id"
+  end
+
+  add_index "multi_element_values", ["multi_element_group_id"], :name => "index_multi_element_values_on_multi_element_group_id"
 
   create_table "realtime_updates", :force => true do |t|
     t.datetime "created_at"

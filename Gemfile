@@ -6,6 +6,8 @@ gem "will_paginate", :git => "http://github.com/mislav/will_paginate.git", :bran
 gem 'mysql'
 gem "fluxx_engine", '>= 0.0.4', :path => "../fluxx_engine"
 gem "haml", ">=3"
+gem 'mysql'
+
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
