@@ -1,20 +1,3 @@
-(function(){var n=this,A=n._,r=typeof StopIteration!=="undefined"?StopIteration:"__break__",j=Array.prototype,l=Object.prototype,o=j.slice,B=j.unshift,C=l.toString,p=l.hasOwnProperty,s=j.forEach,t=j.map,u=j.reduce,v=j.reduceRight,w=j.filter,x=j.every,y=j.some,m=j.indexOf,z=j.lastIndexOf;l=Array.isArray;var D=Object.keys,b=function(a){return new k(a)};if(typeof exports!=="undefined")exports._=b;n._=b;b.VERSION="1.0.3";var i=b.forEach=function(a,c,d){try{if(s&&a.forEach===s)a.forEach(c,d);else if(b.isNumber(a.length))for(var e=
-0,f=a.length;e<f;e++)c.call(d,a[e],e,a);else for(e in a)p.call(a,e)&&c.call(d,a[e],e,a)}catch(g){if(g!=r)throw g;}return a};b.map=function(a,c,d){if(t&&a.map===t)return a.map(c,d);var e=[];i(a,function(f,g,h){e.push(c.call(d,f,g,h))});return e};b.reduce=function(a,c,d,e){if(u&&a.reduce===u)return a.reduce(b.bind(d,e),c);i(a,function(f,g,h){c=d.call(e,c,f,g,h)});return c};b.reduceRight=function(a,c,d,e){if(v&&a.reduceRight===v)return a.reduceRight(b.bind(d,e),c);a=b.clone(b.toArray(a)).reverse();return b.reduce(a,
-c,d,e)};b.detect=function(a,c,d){var e;i(a,function(f,g,h){if(c.call(d,f,g,h)){e=f;b.breakLoop()}});return e};b.filter=function(a,c,d){if(w&&a.filter===w)return a.filter(c,d);var e=[];i(a,function(f,g,h){c.call(d,f,g,h)&&e.push(f)});return e};b.reject=function(a,c,d){var e=[];i(a,function(f,g,h){!c.call(d,f,g,h)&&e.push(f)});return e};b.every=function(a,c,d){c=c||b.identity;if(x&&a.every===x)return a.every(c,d);var e=true;i(a,function(f,g,h){(e=e&&c.call(d,f,g,h))||b.breakLoop()});return e};b.some=
-function(a,c,d){c=c||b.identity;if(y&&a.some===y)return a.some(c,d);var e=false;i(a,function(f,g,h){if(e=c.call(d,f,g,h))b.breakLoop()});return e};b.include=function(a,c){if(m&&a.indexOf===m)return a.indexOf(c)!=-1;var d=false;i(a,function(e){if(d=e===c)b.breakLoop()});return d};b.invoke=function(a,c){var d=b.rest(arguments,2);return b.map(a,function(e){return(c?e[c]:e).apply(e,d)})};b.pluck=function(a,c){return b.map(a,function(d){return d[c]})};b.max=function(a,c,d){if(!c&&b.isArray(a))return Math.max.apply(Math,
-a);var e={computed:-Infinity};i(a,function(f,g,h){g=c?c.call(d,f,g,h):f;g>=e.computed&&(e={value:f,computed:g})});return e.value};b.min=function(a,c,d){if(!c&&b.isArray(a))return Math.min.apply(Math,a);var e={computed:Infinity};i(a,function(f,g,h){g=c?c.call(d,f,g,h):f;g<e.computed&&(e={value:f,computed:g})});return e.value};b.sortBy=function(a,c,d){return b.pluck(b.map(a,function(e,f,g){return{value:e,criteria:c.call(d,e,f,g)}}).sort(function(e,f){var g=e.criteria,h=f.criteria;return g<h?-1:g>h?
-1:0}),"value")};b.sortedIndex=function(a,c,d){d=d||b.identity;for(var e=0,f=a.length;e<f;){var g=e+f>>1;d(a[g])<d(c)?(e=g+1):(f=g)}return e};b.toArray=function(a){if(!a)return[];if(a.toArray)return a.toArray();if(b.isArray(a))return a;if(b.isArguments(a))return o.call(a);return b.values(a)};b.size=function(a){return b.toArray(a).length};b.first=function(a,c,d){return c&&!d?o.call(a,0,c):a[0]};b.rest=function(a,c,d){return o.call(a,b.isUndefined(c)||d?1:c)};b.last=function(a){return a[a.length-1]};
-b.compact=function(a){return b.filter(a,function(c){return!!c})};b.flatten=function(a){return b.reduce(a,[],function(c,d){if(b.isArray(d))return c.concat(b.flatten(d));c.push(d);return c})};b.without=function(a){var c=b.rest(arguments);return b.filter(a,function(d){return!b.include(c,d)})};b.uniq=function(a,c){return b.reduce(a,[],function(d,e,f){if(0==f||(c===true?b.last(d)!=e:!b.include(d,e)))d.push(e);return d})};b.intersect=function(a){var c=b.rest(arguments);return b.filter(b.uniq(a),function(d){return b.every(c,
-function(e){return b.indexOf(e,d)>=0})})};b.zip=function(){for(var a=b.toArray(arguments),c=b.max(b.pluck(a,"length")),d=new Array(c),e=0;e<c;e++)d[e]=b.pluck(a,String(e));return d};b.indexOf=function(a,c){if(m&&a.indexOf===m)return a.indexOf(c);for(var d=0,e=a.length;d<e;d++)if(a[d]===c)return d;return-1};b.lastIndexOf=function(a,c){if(z&&a.lastIndexOf===z)return a.lastIndexOf(c);for(var d=a.length;d--;)if(a[d]===c)return d;return-1};b.range=function(a,c,d){var e=b.toArray(arguments),f=e.length<=
-1;a=f?0:e[0];c=f?e[0]:e[1];d=e[2]||1;e=Math.ceil((c-a)/d);if(e<=0)return[];e=new Array(e);f=a;for(var g=0;;f+=d){if((d>0?f-c:c-f)>=0)return e;e[g++]=f}};b.bind=function(a,c){var d=b.rest(arguments,2);return function(){return a.apply(c||{},d.concat(b.toArray(arguments)))}};b.bindAll=function(a){var c=b.rest(arguments);if(c.length==0)c=b.functions(a);i(c,function(d){a[d]=b.bind(a[d],a)});return a};b.delay=function(a,c){var d=b.rest(arguments,2);return setTimeout(function(){return a.apply(a,d)},c)};
-b.defer=function(a){return b.delay.apply(b,[a,1].concat(b.rest(arguments)))};b.wrap=function(a,c){return function(){var d=[a].concat(b.toArray(arguments));return c.apply(c,d)}};b.compose=function(){var a=b.toArray(arguments);return function(){for(var c=b.toArray(arguments),d=a.length-1;d>=0;d--)c=[a[d].apply(this,c)];return c[0]}};b.keys=D||function(a){if(b.isArray(a))return b.range(0,a.length);var c=[];for(var d in a)p.call(a,d)&&c.push(d);return c};b.values=function(a){return b.map(a,b.identity)};
-b.functions=function(a){return b.filter(b.keys(a),function(c){return b.isFunction(a[c])}).sort()};b.extend=function(a){i(b.rest(arguments),function(c){for(var d in c)a[d]=c[d]});return a};b.clone=function(a){if(b.isArray(a))return a.slice(0);return b.extend({},a)};b.tap=function(a,c){c(a);return a};b.isEqual=function(a,c){if(a===c)return true;var d=typeof a;if(d!=typeof c)return false;if(a==c)return true;if(!a&&c||a&&!c)return false;if(a.isEqual)return a.isEqual(c);if(b.isDate(a)&&b.isDate(c))return a.getTime()===
-c.getTime();if(b.isNaN(a)&&b.isNaN(c))return false;if(b.isRegExp(a)&&b.isRegExp(c))return a.source===c.source&&a.global===c.global&&a.ignoreCase===c.ignoreCase&&a.multiline===c.multiline;if(d!=="object")return false;if(a.length&&a.length!==c.length)return false;d=b.keys(a);var e=b.keys(c);if(d.length!=e.length)return false;for(var f in a)if(!(f in c)||!b.isEqual(a[f],c[f]))return false;return true};b.isEmpty=function(a){if(b.isArray(a)||b.isString(a))return a.length===0;for(var c in a)if(p.call(a,
-c))return false;return true};b.isElement=function(a){return!!(a&&a.nodeType==1)};b.isArray=l||function(a){return!!(a&&a.concat&&a.unshift&&!a.callee)};b.isArguments=function(a){return a&&a.callee};b.isFunction=function(a){return!!(a&&a.constructor&&a.call&&a.apply)};b.isString=function(a){return!!(a===""||a&&a.charCodeAt&&a.substr)};b.isNumber=function(a){return a===+a||C.call(a)==="[object Number]"};b.isBoolean=function(a){return a===true||a===false};b.isDate=function(a){return!!(a&&a.getTimezoneOffset&&
-a.setUTCFullYear)};b.isRegExp=function(a){return!!(a&&a.test&&a.exec&&(a.ignoreCase||a.ignoreCase===false))};b.isNaN=function(a){return b.isNumber(a)&&isNaN(a)};b.isNull=function(a){return a===null};b.isUndefined=function(a){return typeof a=="undefined"};b.noConflict=function(){n._=A;return this};b.identity=function(a){return a};b.times=function(a,c,d){for(var e=0;e<a;e++)c.call(d,e)};b.breakLoop=function(){throw r;};b.mixin=function(a){i(b.functions(a),function(c){E(c,b[c]=a[c])})};var F=0;b.uniqueId=
-function(a){var c=F++;return a?a+c:c};b.templateSettings={start:"<%",end:"%>",interpolate:/<%=(.+?)%>/g};b.template=function(a,c){var d=b.templateSettings,e=new RegExp("'(?=[^"+d.end.substr(0,1)+"]*"+d.end.replace(/([.*+?^${}()|[\]\/\\])/g,"\\$1")+")","g");d=new Function("obj","var p=[],print=function(){p.push.apply(p,arguments);};with(obj){p.push('"+a.replace(/[\r\t\n]/g," ").replace(e,"\t").split("'").join("\\'").split("\t").join("'").replace(d.interpolate,"',$1,'").split(d.start).join("');").split(d.end).join("p.push('")+
-"');}return p.join('');");return c?d(c):d};b.each=b.forEach;b.foldl=b.inject=b.reduce;b.foldr=b.reduceRight;b.select=b.filter;b.all=b.every;b.any=b.some;b.head=b.first;b.tail=b.rest;b.methods=b.functions;var k=function(a){this._wrapped=a},q=function(a,c){return c?b(a).chain():a},E=function(a,c){k.prototype[a]=function(){var d=b.toArray(arguments);B.call(d,this._wrapped);return q(c.apply(b,d),this._chain)}};b.mixin(b);i(["pop","push","reverse","shift","sort","splice","unshift"],function(a){var c=j[a];
-k.prototype[a]=function(){c.apply(this._wrapped,arguments);return q(this._wrapped,this._chain)}});i(["concat","join","slice"],function(a){var c=j[a];k.prototype[a]=function(){return q(c.apply(this._wrapped,arguments),this._chain)}});k.prototype.chain=function(){this._chain=true;return this};k.prototype.value=function(){return this._wrapped}})();
 /*!
  * jQuery JavaScript Library v1.4.2
  * http://jquery.com/
@@ -1180,7 +1163,115 @@ e*2;b.animate(c,f,a.options.easing);for(e=1;e<l;e++)b.animate(i,f,a.options.easi
  */
 (function(e){e.effects.transfer=function(a){return this.queue(function(){var b=e(this),c=e(a.options.to),d=c.offset();c={top:d.top,left:d.left,height:c.innerHeight(),width:c.innerWidth()};d=b.offset();var f=e('<div class="ui-effects-transfer"></div>').appendTo(document.body).addClass(a.options.className).css({top:d.top,left:d.left,height:b.innerHeight(),width:b.innerWidth(),position:"absolute"}).animate(c,a.duration,a.options.easing,function(){f.remove();a.callback&&a.callback.apply(b[0],arguments);
 b.dequeue()})})}})(jQuery);
-;(function($){
+;jQuery.fn.shortkeys = jQuery.fn.keys = function (obj, settings) {		
+	var el = this;
+	this.settings = jQuery.extend({
+			split: "+",
+			moreKeys: {}			
+		}, settings || {});	
+	this.wackyKeys = { '.': 190, ',': 188, ';': 59,	'Space': 32	};	
+	this.formElements  = new Array("input", "select", "textarea", "button");
+	this.keys = new Array();	
+	this.onFormElement = false;
+	this.keysDown = new Array();
+	this.init = function (obj) {
+		for(x in this.wackyKeys) {
+			this.wackyKeys[x.toUpperCase()] = this.wackyKeys[x];
+		}
+		for(x in obj) {
+			this.keys.push(x.split(this.settings.split));
+		}
+		for(i in this.keys) {
+			var quickArr = new Array();
+			for(j in this.keys[i]) {
+				quickArr.push(this.convertToNumbers(this.keys[i][j].toUpperCase()));
+			}
+			quickArr.sort();
+			this.keys[i] = quickArr;
+		}
+	};	
+	this.convertToNumbers = function (inp) {
+		if (this.wackyKeys[inp] != undefined) {
+			return this.wackyKeys[inp];
+		}
+		return inp.toUpperCase().charCodeAt(0);
+	};	
+	this.keyAdd = function(keyCode) {
+		this.keysDown.push(keyCode);
+		this.keysDown.sort();
+	};
+	this.keyRemove = function (keyCode) {
+		for(i in this.keysDown) {
+			if(this.keysDown[i] == keyCode) {
+				this.keysDown.splice(i,1);
+			}
+		};	
+		this.keysDown.sort();	
+	};		
+	this.keyTest = function (i) {
+		if (this.keys[i].length != this.keysDown.length) return false;
+		for(j in this.keys[i]) {
+			if(this.keys[i][j] != this.keysDown[j]) {
+				return false;
+			}
+		}	
+		return true;
+	};
+	this.keyRemoveAll = function () {
+		this.keysDown = new Array();	
+	};
+	this.focused = function (bool) {
+		this.onFormElement = bool;
+	}	
+	$(document).keydown(function(e) {
+		el.keyAdd(e.keyCode);
+		var i = 0;
+		for(x in obj) {
+			if(el.keyTest(i) && !el.onFormElement) {
+				obj[x]();
+				return false;
+				break;	
+			}			
+			i++;
+		};	
+	});	
+	$(document).keyup(function (e) {
+		el.keyRemove(e.keyCode);
+	});	
+	for(x in this.formElements) {
+		$(this.formElements[x]).focus( function () {
+			el.focused(true);
+		});
+		$(this.formElements[x]).blur( function () {
+			el.focused(false);
+		});
+	}	
+	$(document).focus( function () {
+		el.keyRemoveAll();
+	});
+	
+	this.init(obj);
+	jQuery.extend(this.wackyKeys, this.settings.moreKeys);
+
+	return this;
+};(function(){var n=this,A=n._,r=typeof StopIteration!=="undefined"?StopIteration:"__break__",j=Array.prototype,l=Object.prototype,o=j.slice,B=j.unshift,C=l.toString,p=l.hasOwnProperty,s=j.forEach,t=j.map,u=j.reduce,v=j.reduceRight,w=j.filter,x=j.every,y=j.some,m=j.indexOf,z=j.lastIndexOf;l=Array.isArray;var D=Object.keys,b=function(a){return new k(a)};if(typeof exports!=="undefined")exports._=b;n._=b;b.VERSION="1.0.3";var i=b.forEach=function(a,c,d){try{if(s&&a.forEach===s)a.forEach(c,d);else if(b.isNumber(a.length))for(var e=
+0,f=a.length;e<f;e++)c.call(d,a[e],e,a);else for(e in a)p.call(a,e)&&c.call(d,a[e],e,a)}catch(g){if(g!=r)throw g;}return a};b.map=function(a,c,d){if(t&&a.map===t)return a.map(c,d);var e=[];i(a,function(f,g,h){e.push(c.call(d,f,g,h))});return e};b.reduce=function(a,c,d,e){if(u&&a.reduce===u)return a.reduce(b.bind(d,e),c);i(a,function(f,g,h){c=d.call(e,c,f,g,h)});return c};b.reduceRight=function(a,c,d,e){if(v&&a.reduceRight===v)return a.reduceRight(b.bind(d,e),c);a=b.clone(b.toArray(a)).reverse();return b.reduce(a,
+c,d,e)};b.detect=function(a,c,d){var e;i(a,function(f,g,h){if(c.call(d,f,g,h)){e=f;b.breakLoop()}});return e};b.filter=function(a,c,d){if(w&&a.filter===w)return a.filter(c,d);var e=[];i(a,function(f,g,h){c.call(d,f,g,h)&&e.push(f)});return e};b.reject=function(a,c,d){var e=[];i(a,function(f,g,h){!c.call(d,f,g,h)&&e.push(f)});return e};b.every=function(a,c,d){c=c||b.identity;if(x&&a.every===x)return a.every(c,d);var e=true;i(a,function(f,g,h){(e=e&&c.call(d,f,g,h))||b.breakLoop()});return e};b.some=
+function(a,c,d){c=c||b.identity;if(y&&a.some===y)return a.some(c,d);var e=false;i(a,function(f,g,h){if(e=c.call(d,f,g,h))b.breakLoop()});return e};b.include=function(a,c){if(m&&a.indexOf===m)return a.indexOf(c)!=-1;var d=false;i(a,function(e){if(d=e===c)b.breakLoop()});return d};b.invoke=function(a,c){var d=b.rest(arguments,2);return b.map(a,function(e){return(c?e[c]:e).apply(e,d)})};b.pluck=function(a,c){return b.map(a,function(d){return d[c]})};b.max=function(a,c,d){if(!c&&b.isArray(a))return Math.max.apply(Math,
+a);var e={computed:-Infinity};i(a,function(f,g,h){g=c?c.call(d,f,g,h):f;g>=e.computed&&(e={value:f,computed:g})});return e.value};b.min=function(a,c,d){if(!c&&b.isArray(a))return Math.min.apply(Math,a);var e={computed:Infinity};i(a,function(f,g,h){g=c?c.call(d,f,g,h):f;g<e.computed&&(e={value:f,computed:g})});return e.value};b.sortBy=function(a,c,d){return b.pluck(b.map(a,function(e,f,g){return{value:e,criteria:c.call(d,e,f,g)}}).sort(function(e,f){var g=e.criteria,h=f.criteria;return g<h?-1:g>h?
+1:0}),"value")};b.sortedIndex=function(a,c,d){d=d||b.identity;for(var e=0,f=a.length;e<f;){var g=e+f>>1;d(a[g])<d(c)?(e=g+1):(f=g)}return e};b.toArray=function(a){if(!a)return[];if(a.toArray)return a.toArray();if(b.isArray(a))return a;if(b.isArguments(a))return o.call(a);return b.values(a)};b.size=function(a){return b.toArray(a).length};b.first=function(a,c,d){return c&&!d?o.call(a,0,c):a[0]};b.rest=function(a,c,d){return o.call(a,b.isUndefined(c)||d?1:c)};b.last=function(a){return a[a.length-1]};
+b.compact=function(a){return b.filter(a,function(c){return!!c})};b.flatten=function(a){return b.reduce(a,[],function(c,d){if(b.isArray(d))return c.concat(b.flatten(d));c.push(d);return c})};b.without=function(a){var c=b.rest(arguments);return b.filter(a,function(d){return!b.include(c,d)})};b.uniq=function(a,c){return b.reduce(a,[],function(d,e,f){if(0==f||(c===true?b.last(d)!=e:!b.include(d,e)))d.push(e);return d})};b.intersect=function(a){var c=b.rest(arguments);return b.filter(b.uniq(a),function(d){return b.every(c,
+function(e){return b.indexOf(e,d)>=0})})};b.zip=function(){for(var a=b.toArray(arguments),c=b.max(b.pluck(a,"length")),d=new Array(c),e=0;e<c;e++)d[e]=b.pluck(a,String(e));return d};b.indexOf=function(a,c){if(m&&a.indexOf===m)return a.indexOf(c);for(var d=0,e=a.length;d<e;d++)if(a[d]===c)return d;return-1};b.lastIndexOf=function(a,c){if(z&&a.lastIndexOf===z)return a.lastIndexOf(c);for(var d=a.length;d--;)if(a[d]===c)return d;return-1};b.range=function(a,c,d){var e=b.toArray(arguments),f=e.length<=
+1;a=f?0:e[0];c=f?e[0]:e[1];d=e[2]||1;e=Math.ceil((c-a)/d);if(e<=0)return[];e=new Array(e);f=a;for(var g=0;;f+=d){if((d>0?f-c:c-f)>=0)return e;e[g++]=f}};b.bind=function(a,c){var d=b.rest(arguments,2);return function(){return a.apply(c||{},d.concat(b.toArray(arguments)))}};b.bindAll=function(a){var c=b.rest(arguments);if(c.length==0)c=b.functions(a);i(c,function(d){a[d]=b.bind(a[d],a)});return a};b.delay=function(a,c){var d=b.rest(arguments,2);return setTimeout(function(){return a.apply(a,d)},c)};
+b.defer=function(a){return b.delay.apply(b,[a,1].concat(b.rest(arguments)))};b.wrap=function(a,c){return function(){var d=[a].concat(b.toArray(arguments));return c.apply(c,d)}};b.compose=function(){var a=b.toArray(arguments);return function(){for(var c=b.toArray(arguments),d=a.length-1;d>=0;d--)c=[a[d].apply(this,c)];return c[0]}};b.keys=D||function(a){if(b.isArray(a))return b.range(0,a.length);var c=[];for(var d in a)p.call(a,d)&&c.push(d);return c};b.values=function(a){return b.map(a,b.identity)};
+b.functions=function(a){return b.filter(b.keys(a),function(c){return b.isFunction(a[c])}).sort()};b.extend=function(a){i(b.rest(arguments),function(c){for(var d in c)a[d]=c[d]});return a};b.clone=function(a){if(b.isArray(a))return a.slice(0);return b.extend({},a)};b.tap=function(a,c){c(a);return a};b.isEqual=function(a,c){if(a===c)return true;var d=typeof a;if(d!=typeof c)return false;if(a==c)return true;if(!a&&c||a&&!c)return false;if(a.isEqual)return a.isEqual(c);if(b.isDate(a)&&b.isDate(c))return a.getTime()===
+c.getTime();if(b.isNaN(a)&&b.isNaN(c))return false;if(b.isRegExp(a)&&b.isRegExp(c))return a.source===c.source&&a.global===c.global&&a.ignoreCase===c.ignoreCase&&a.multiline===c.multiline;if(d!=="object")return false;if(a.length&&a.length!==c.length)return false;d=b.keys(a);var e=b.keys(c);if(d.length!=e.length)return false;for(var f in a)if(!(f in c)||!b.isEqual(a[f],c[f]))return false;return true};b.isEmpty=function(a){if(b.isArray(a)||b.isString(a))return a.length===0;for(var c in a)if(p.call(a,
+c))return false;return true};b.isElement=function(a){return!!(a&&a.nodeType==1)};b.isArray=l||function(a){return!!(a&&a.concat&&a.unshift&&!a.callee)};b.isArguments=function(a){return a&&a.callee};b.isFunction=function(a){return!!(a&&a.constructor&&a.call&&a.apply)};b.isString=function(a){return!!(a===""||a&&a.charCodeAt&&a.substr)};b.isNumber=function(a){return a===+a||C.call(a)==="[object Number]"};b.isBoolean=function(a){return a===true||a===false};b.isDate=function(a){return!!(a&&a.getTimezoneOffset&&
+a.setUTCFullYear)};b.isRegExp=function(a){return!!(a&&a.test&&a.exec&&(a.ignoreCase||a.ignoreCase===false))};b.isNaN=function(a){return b.isNumber(a)&&isNaN(a)};b.isNull=function(a){return a===null};b.isUndefined=function(a){return typeof a=="undefined"};b.noConflict=function(){n._=A;return this};b.identity=function(a){return a};b.times=function(a,c,d){for(var e=0;e<a;e++)c.call(d,e)};b.breakLoop=function(){throw r;};b.mixin=function(a){i(b.functions(a),function(c){E(c,b[c]=a[c])})};var F=0;b.uniqueId=
+function(a){var c=F++;return a?a+c:c};b.templateSettings={start:"<%",end:"%>",interpolate:/<%=(.+?)%>/g};b.template=function(a,c){var d=b.templateSettings,e=new RegExp("'(?=[^"+d.end.substr(0,1)+"]*"+d.end.replace(/([.*+?^${}()|[\]\/\\])/g,"\\$1")+")","g");d=new Function("obj","var p=[],print=function(){p.push.apply(p,arguments);};with(obj){p.push('"+a.replace(/[\r\t\n]/g," ").replace(e,"\t").split("'").join("\\'").split("\t").join("'").replace(d.interpolate,"',$1,'").split(d.start).join("');").split(d.end).join("p.push('")+
+"');}return p.join('');");return c?d(c):d};b.each=b.forEach;b.foldl=b.inject=b.reduce;b.foldr=b.reduceRight;b.select=b.filter;b.all=b.every;b.any=b.some;b.head=b.first;b.tail=b.rest;b.methods=b.functions;var k=function(a){this._wrapped=a},q=function(a,c){return c?b(a).chain():a},E=function(a,c){k.prototype[a]=function(){var d=b.toArray(arguments);B.call(d,this._wrapped);return q(c.apply(b,d),this._chain)}};b.mixin(b);i(["pop","push","reverse","shift","sort","splice","unshift"],function(a){var c=j[a];
+k.prototype[a]=function(){c.apply(this._wrapped,arguments);return q(this._wrapped,this._chain)}});i(["concat","join","slice"],function(a){var c=j[a];k.prototype[a]=function(){return q(c.apply(this._wrapped,arguments),this._chain)}});k.prototype.chain=function(){this._chain=true;return this};k.prototype.value=function(){return this._wrapped}})();
+(function($){
   $.fn.extend({
     addFluxxCard: function(options, onComplete) {
       var options = $.fluxx.util.options_with_callback($.fluxx.card.defaults,options,onComplete);
@@ -1194,16 +1285,23 @@ b.dequeue()})})}})(jQuery);
             box:     $('.card-box:eq(0)', $card)
           })
           .bind({
-            'fluxxCard.complete': _.callAll(
-              function(){$card.show().resizeFluxxCard(); $.my.stage.resizeFluxxStage()},
+            'complete.fluxx.card': _.callAll(
+              $.fluxx.util.itEndsHere,
+              /* DOES NOT WORK -- _.bind($.fn.show, $card), */
+              /* DOES WORK     -- _.bind(function(){_.bind($.fn.show, this)()}, $card), */
+              function(){$card.show();},
+              _.bind($.fn.resizeFluxxCard, $card),
+              _.bind($.fn.resizeFluxxStage, $.my.stage),
               options.callback
             ),
-            'fluxxCard.load': options.onload
+            'load.fluxx.card': options.load,
+            'close.fluxx.card': options.close,
+            'unload.fluxx.card': options.unload
           });
-        $card.trigger('fluxxCard.load')
+        $card.trigger('load.fluxx.card');
         $card.fluxxCardLoadListing({url: options.listing.url}, function(){
           $card.fluxxCardLoadDetail({url: options.detail.url}, function(){
-            $card.trigger('fluxxCard.complete');
+            $card.trigger('complete.fluxx.card');
           })
         });
         $.my.cards = $('.card');
@@ -1213,9 +1311,14 @@ b.dequeue()})})}})(jQuery);
       var options = $.fluxx.util.options_with_callback({},options,onComplete);
       return this.each(function(){
         $(this)
-          .bind('fluxxCard.unload', options.callback)
-          .bind('fluxxCard.unload', function(e){$(e.target).remove(); $.my.cards = $('.card')})
-          .trigger('fluxxCard.unload');
+          .bind({
+            'unload.fluxx.card': _.callAll(
+              options.callback,
+              function(e){ $(e.target).remove(); $.my.cards = $('.card') }
+            )
+          })
+          .trigger('close.fluxx.card')
+          .trigger('unload.fluxx.card');
       });
     },
     resizeFluxxCard: function(options, onComplete) {
@@ -1241,7 +1344,7 @@ b.dequeue()})})}})(jQuery);
                 $areaBody = $('.body', $area);
             $areaBody.height(
               $areaBody.parent().innerHeight() -
-              _.addUp($areaBody.siblings(), 'outerHeight', true)
+              _.addUp($areaBody.siblings().not('.drawer'), 'outerHeight', true)
             )
           });
         });
@@ -1280,10 +1383,12 @@ b.dequeue()})})}})(jQuery);
         data: {}
       };
       var options = $.fluxx.util.options_with_callback(defaults,options,onComplete);
-      options.area.unbind('fluxxArea.complete').bind('fluxxArea.complete', options.callback);
+      options.area.unbind('complete.fluxx.area').bind('complete.fluxx.area', options.callback);
 
+      $.fluxx.log("loading " + options.area.fluxxCard().attr('id') + "." + options.area.attr('class')
+        + " -> " + options.url);
       if (!options.url) {
-        options.area.trigger('fluxxArea.complete');
+        options.area.trigger('complete.fluxx.area');
         return this;
       }
       if (!options.area.data('history')) {
@@ -1301,10 +1406,11 @@ b.dequeue()})})}})(jQuery);
           $('.header', options.area).html($('#card-header', $document).html() || '&nbsp;');
           $('.body',   options.area).html($('#card-body',   $document).html() || '&nbsp;');
           $('.footer', options.area).html($('#card-footer', $document).html() || '&nbsp;');
-          options.area.trigger('fluxxArea.complete');
+          $('.drawer', options.area).html($('#card-drawer', $document).html() || '&nbsp;');
+          options.area.trigger('complete.fluxx.area');
         },
         error: function(xhr, status, error) {
-          options.area.trigger('fluxxArea.complete');
+          options.area.trigger('complete.fluxx.area');
         }
       });
       
@@ -1327,7 +1433,9 @@ b.dequeue()})})}})(jQuery);
       card: {
         defaults: {
           title: 'New Card',
-          onload: $.noop,
+          load: $.noop,
+          close: $.noop,
+          unload: $.noop,
           listing: {
             url: null
           },
@@ -1350,7 +1458,7 @@ b.dequeue()})})}})(jQuery);
                 '</div>',
                 '<div class="card-body">',
                   $.fluxx.util.resultOf($.fluxx.card.ui.area, $.extend(options,{type: 'listing'})),
-                  $.fluxx.util.resultOf($.fluxx.card.ui.area, $.extend(options,{type: 'detail'})),
+                  $.fluxx.util.resultOf($.fluxx.card.ui.area, $.extend(options,{type: 'detail', drawer: true})),
                 '</div>',
                 '<div class="card-footer">',
                   'Card Footer',
@@ -1381,6 +1489,7 @@ b.dequeue()})})}})(jQuery);
         '<div class="header"></div>',
         '<div class="body"></div>',
         '<div class="footer"></div>',
+        (options.drawer ? '<div class="drawer"></div>' : ''),
       '</div>'
     ];
   };
@@ -1393,8 +1502,8 @@ b.dequeue()})})}})(jQuery);
   _.mixin({
     addUp: function (set, property) {
       var args = _.toArray(arguments).slice(2);
-      return _.reduce($(set).get(), 0, function(m,i){
-        return m + $(i)[property].call($(i), args);
+      return _.reduce($(set), 0, function(m,i){
+        return m + $(i)[property].apply($(i), args);
       });
     },
     callAll: function () {
@@ -1402,7 +1511,7 @@ b.dequeue()})})}})(jQuery);
       return function() {
         var this_ = this;
         var args  = arguments;
-        _.each(functions, function(f){f.call(this_, args)});
+        _.each(functions, function(f){f.apply(this_, args)});
       }
     }
   });
@@ -1450,6 +1559,23 @@ b.dequeue()})})}})(jQuery);
       }
     }
   });
+  
+  $(document).shortkeys({
+    'Space+m': function() {
+      $.fluxx.log('--- $.my CACHE BEGIN ---');
+      _.each($.my, function(val,key) {
+        $.fluxx.log(
+          key +
+          ' [' +
+          val.length +
+          ']: [' +
+          _.map(val, function(i){return $('<div>').html($(i).clone().empty().html('...')).html()}).join(', ') +
+          ']'
+        );
+      });
+      $.fluxx.log('--- $.my CACHE END ---');
+    }
+  })
 })(jQuery);
 
 jQuery(function($){
@@ -1459,10 +1585,37 @@ jQuery(function($){
     addFluxxDock: function(options, onComplete) {
       var options = $.fluxx.util.options_with_callback($.fluxx.dock.defaults,options,onComplete);
       return this.each(function(){
-        var $dock = $.fluxx.dock.ui.call($.my.hand, options).hide()
-          .appendTo($.my.hand);
+        $.my.dock = $.fluxx.dock.ui.call($.my.footer, options)
+          .appendTo($.my.footer);
+        $.my.viewport = $('#viewport');
+        $.my.iconlist = $('#iconlist');
+        $.my.dock
+          .bind({
+            'complete.fluxx.dock': _.callAll(options.callback, $.fluxx.util.itEndsWithMe)
+          })
+          .trigger('complete.fluxx.dock');
+      });
+    },
+    
+    addViewPortIcon: function(options) {
+      var options = $.fluxx.util.options_with_callback({}, options);
+      return this.each(function(){
+        if (options.card.data('icon')) return;
+        var $icon = $.fluxx.dock.ui.viewportIcon.call(this, options).appendTo($.my.iconlist);
+        options.card.data('icon', $icon);
+        $icon.data('card', options.card);
+      });
+    },
+    
+    removeViewPortIcon: function(options) {
+      var options = $.fluxx.util.options_with_callback({}, options);
+      return this.each(function(){
+        if (!options.card.data('icon')) return;
+        options.card.data('icon').remove();
+        options.card.data('icon', null);
       });
     }
+
   });
   $.extend(true, {
     fluxx: {
@@ -1474,19 +1627,45 @@ jQuery(function($){
         },
         ui: function(options) {
           return $('<div>')
-            .attr($.fluxx.card.attrs)
+            .attr($.fluxx.dock.attrs)
             .html($.fluxx.util.resultOf([
-              'Hello'
+              $.fluxx.dock.ui.viewport(options)
             ]));
         }
       }
     }
   });
+  $.fluxx.dock.ui.viewport = function (options) {
+    return $.fluxx.util.resultOf([
+      '<div id="viewport">',
+        '<ol id="iconlist"></ol>',
+      '</div>'
+    ]);
+  };
+  $.fluxx.dock.ui.viewportIcon = function (options) {
+    return $($.fluxx.util.resultOf([
+      '<li class="icon">',
+        '<a class="link" href="#', options.card.attr('id'), '">',
+          '<span class="label">Card</span>',
+        '</a>',
+      '</li>'
+    ]));
+  };
   
   $(function($){
-    $('.card').live('fluxxCard.load', function(){
-      var $card = $(this);
-      $.fluxx.log($card.attr('id'), 'card loaded');
+    $('#stage').live('complete.fluxx.stage', function(e) {
+      $.my.footer.addFluxxDock(function(){
+        $('.card')
+          .each(function(){ $.my.dock.addViewPortIcon({card: $(this)}); })
+          .live('load.fluxx.card', function(e){
+            $.fluxx.util.itEndsWithMe(e);
+            $.my.dock.addViewPortIcon({card: $(this)});
+          })
+         .live('close.fluxx.card', function(e){
+            $.fluxx.util.itEndsWithMe(e);
+            $.my.dock.removeViewPortIcon({card: $(this)});
+          });
+      });
     });
   });
 })(jQuery);(function($){
@@ -1500,13 +1679,13 @@ jQuery(function($){
         $.my.header = $('#header');
         $.my.footer = $('#footer');
         $.my.stage.bind({
-          'fluxxStage.complete': _.callAll(
-            function(){ $.my.stage.installFluxxDecorators(); },
-            function(){ $.my.hand.addFluxxCards({cards: $.fluxx.config.cards});},
+          'complete.fluxx.stage': _.callAll(
+            _.bind($.fn.installFluxxDecorators, $.my.stage),
+            _.bind($.fn.addFluxxCards, $.my.hand, {cards: $.fluxx.config.cards}),
             options.callback
           )
         });
-        $.my.stage.trigger('fluxxStage.complete');
+        $.my.stage.trigger('complete.fluxx.stage');
       });
     },
     removeFluxxStage: function(onComplete) {
@@ -1514,7 +1693,7 @@ jQuery(function($){
       return this.each(function(){
         if (!$.my.stage) return;
         $(this).remove();
-        $.my.stage.trigger('fluxxStage.unload');
+        $.my.stage.trigger('unload.fluxx.stage');
         $.my.stage = undefined;
         $.my.hand  = undefined;
         $.my.cards = $('.card');
@@ -1527,8 +1706,8 @@ jQuery(function($){
       var allCards = _.addUp($.my.cards, 'outerWidth', true);
       $.my.stage
         .width(allCards)
-        .bind('fluxxStage.resize', options.callback)
-        .trigger('fluxxStage.resize');
+        .bind('resize.fluxx.stage', options.callback)
+        .trigger('resize.fluxx.stage');
       return this;
     },
     
@@ -1653,7 +1832,7 @@ jQuery(function($){
     '</div>'
   ].join('');
   $.fluxx.stage.ui.footer = [
-    '<div id="footer">Footer</div>'
+    '<div id="footer"></div>'
   ].join('');
   
   $(window).resize(function(e){
