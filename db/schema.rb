@@ -9,7 +9,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100630002546) do
+ActiveRecord::Schema.define(:version => 20100710035523) do
+
+  create_table "client_stores", :force => true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "user_id"
+    t.string   "name"
+    t.datetime "deleted_at"
+    t.text     "data",       :limit => 2147483647
+  end
+
+  add_index "client_stores", ["user_id"], :name => "index_client_stores_on_user_id"
 
   create_table "grape_varieties", :force => true do |t|
     t.datetime "created_at"
