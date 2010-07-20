@@ -2,7 +2,7 @@
   %head
     %title "Wine Dashboard"
     =javascript_include_tag '/fluxx_engine/dist/fluxx.engine.full.js'
-    =stylesheet_link_tag '/fluxx_engine/theme/_common/css/style.css'
+    =stylesheet_link_tag '/fluxx_engine/theme/default/css/style.css'
     :javascript
       $.extend(true, {
         fluxx: {
@@ -28,8 +28,41 @@
               }
             }
           },
+
           config: {
-            cards: [
+          dock: {
+                quicklinks: [
+                  [
+                    {
+                      label: 'QL 1',
+                      url: '/demo/data/wine/wl.html',
+                      className: 'new-listing',
+                      type: 'green small'
+                    },
+                    {
+                      label: 'QL 2',
+                      url: '/demo/data/wine/wd.html',
+                      className: 'new-detail',
+                      type: 'blue small'
+                    }
+                  ],
+                  [
+                    {
+                      label: 'PLUS',
+                      url: '#',
+                      className: 'noop',
+                      type: 'plus small',
+                      popup: [
+                        'PLUS 1',
+                        'PLUS 2',
+                        'PLUS 3',
+                        'PLUS 4'
+                      ],
+                    }
+                  ]
+                ],
+          },
+          cards: [
               {
                 title: 'Hello',
                 listing: {
