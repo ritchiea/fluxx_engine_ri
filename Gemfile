@@ -4,6 +4,7 @@ source 'http://gemcutter.org/'
 gem 'rails', '3.0.0.beta4'
 gem "will_paginate", :git => "http://github.com/mislav/will_paginate.git", :branch => "rails3"
 gem 'mysql'
+gem "aasm", :git => "http://github.com/rubyist/aasm.git"
 gem "fluxx_engine", '>= 0.0.4', :path => "../fluxx_engine"
 gem "haml", ">=3"
 gem "thinking-sphinx", :git => "http://github.com/freelancing-god/thinking-sphinx.git", :branch => "rails3", :require => 'thinking_sphinx'
