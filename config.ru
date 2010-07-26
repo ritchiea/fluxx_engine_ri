@@ -5,7 +5,10 @@ module Rack
       @app = app
     end
     def call env
-      `cd public/fluxx_engine && rake build`
+      path = Utils.unescape(env["PATH_INFO"])
+      if path.match('\.(css|js)$')
+        `cd public/fluxx_engine && rake build`
+      end
       @app.call env
     end
   end
