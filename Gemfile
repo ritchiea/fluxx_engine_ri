@@ -1,14 +1,18 @@
 source 'http://rubygems.org'
 source 'http://gemcutter.org/'
 
-gem 'rails', '3.0.0.beta4'
+gem 'rails', '3.0.0.rc'
 gem "will_paginate", :git => "http://github.com/mislav/will_paginate.git", :branch => "rails3"
 gem 'mysql'
 gem "aasm", :git => "http://github.com/rubyist/aasm.git"
-gem "fluxx_engine", '>= 0.0.4', :path => "../fluxx_engine"
+gem "fluxx_engine", '>= 0.0.5', :path => "../fluxx_engine"
 gem "haml", ">=3"
-gem 'thinking-sphinx', '2.0.0.rc1', :require => 'thinking_sphinx'
+#gem 'thinking-sphinx', '2.0.0.rc1', :require => 'thinking_sphinx'
+gem "thinking-sphinx", :git => "http://github.com/freelancing-god/thinking-sphinx.git", :branch => "rails3", :require => 'thinking_sphinx'
+
 gem "acts_as_audited", :git => "git://github.com/ehansen486/acts_as_audited.git"
+#gem 'formtastic-rails3', '>= 0.9.10.0'
+gem "formtastic", :git => "http://github.com/justinfrench/formtastic.git", :branch => "rails3"
 
 
 # Bundle edge Rails instead:
