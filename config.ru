@@ -3,17 +3,25 @@ module Rack
   class FluxxBuilder
     def initialize app
       @app = app
+      @build_dir = 'public/fluxx_engine'
+      @path_prefix = '/fluxx_engine/'
     end
     def call env
       path = Utils.unescape(env["PATH_INFO"])
-      if path.match('\.(css|js)$')
-        `cd public/fluxx_engine && rake build`
+      if path.match('\.css$')
+        file = path.gsub(/^#{@path_prefix}/, '')
+        $stderr.puts ">>> BUILDING #{file}"
+        `cd #{@build_dir} && rake build:css[#{file}]`
+      elsif path.match('\.js$')
+        `cd #{@build_dir} && rake build:js`
       end
       @app.call env
     end
   end
 end
 
-use Rack::FluxxBuilder
+is_ui_dev = ENV['FLUXX_UI_DEV'].to_i == 1 ? true : false
+puts "FLUXX_UI_DEV = #{is_ui_dev}"
+use Rack::FluxxBuilder if is_ui_dev
 require ::File.expand_path('../config/environment',  __FILE__)
 run FluxxEngineRi::Application
