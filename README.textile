@@ -15,6 +15,7 @@ fluxx_engine gem
 * gem install jeweler to make sure you have jeweler available
 * cd ../fluxx_engine; rake install
 ** Now you should see a fluxx_engine.gemspec file living in your fluxx_engine directory
+* rails generate audited_migration
 * generate the migration.  Note that this can be run multiple times without overwriting or generating extra migrations.  In the future to get upgrades, simply run it again
 ** rails generate fluxx_engine_migration
 * generate the javascript and copy it to your application's public directory
