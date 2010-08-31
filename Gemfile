@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
 source 'http://gemcutter.org/'
 
-gem 'rails', '3.0.0.rc'
+gem 'rails', '3.0.0'
 gem "will_paginate", :git => "http://github.com/mislav/will_paginate.git", :branch => "rails3"
 gem 'mysql'
 gem "aasm", :git => "http://github.com/rubyist/aasm.git"
