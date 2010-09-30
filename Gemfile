@@ -11,3 +11,7 @@ gem 'thinking-sphinx', '2.0.0.rc1', :require => 'thinking_sphinx'
 gem "aasm", '2.2.0'
 gem 'acts_as_audited_rails3', '>=1.1.1.5'
 gem 'formtastic', '~> 1.1.0'
+gem 'compass'
+gem 'fastercsv', '>= 1.5.3'
+gem 'haml', '>= 3'
+

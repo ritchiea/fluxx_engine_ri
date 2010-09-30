@@ -12,3 +12,7 @@ db/migrate/20100610171211_create_fluxx_engine_realtime_updates_table.rb
 .bundle
 public/fluxx_engine
 Gemfile.lock
+public/images/fluxx_engine/
+public/javascripts/fluxx_engine/
+public/stylesheets/compiled/
+public/stylesheets/fluxx_engine/
